@@ -1,0 +1,54 @@
+//depenecy of retrofit and http
+
+
+implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+
+
+
+//Interface create ApiClient.java
+
+OkHttpClient.Builder httpClient = new OkHttpClient.Builder() .readTimeout(60, TimeUnit.SECONDS).connectTimeout(60, TimeUnit.SECONDS);
+
+
+
+Retrofit localretrofit = new Retrofit.Builder()
+            .baseUrl("https://webdevelopment33.com/360view/wp-json/wp/v1/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(httpClient.build())
+            .build();
+           Api LOCALAPI = localretrofit.create(Api.class);
+           
+           
+           
+// Create inteface Api.java
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+
+@FormUrlEncoded
+    @POST("createView360")
+    Call<ResponseBody> uploadimage(@Field("media") String media);
+    
+    
+    
+//Call Api in activity
+
+
+
+Call<ResponseBody> call = ApiClient.LOCALAPI.uploadimage(sj.toString());
+
+call.enqueue(new Callback<ResponseBody>() {
+@Override
+public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                       
+      }
+
+@Override
+public void onFailure(Call<ResponseBody> call, Throwable t) {
+                       
+      }
+});
